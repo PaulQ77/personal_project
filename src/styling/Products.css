@@ -1,0 +1,10 @@
+.photo {
+    background-color: aqua;
+    height: 250px
+}
+
+.photo > img {
+    width: 275px;
+    height: 250px;
+    
+}
