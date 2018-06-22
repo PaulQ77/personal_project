@@ -1,9 +1,12 @@
 
 import React from 'react';
-// import { Link } from 'react-router-dom';
+// eslint-disable-next-line
+import { Link } from 'react-router-dom';
+// import Footer from './Footer'
 
 
 const Login = props => {
+  console.log(props)
   return (
     <div className= 'login'>
       <button className='login-button' onClick={props.login}> Login </button>
@@ -14,21 +17,7 @@ const Login = props => {
 export default Login;
 
 
-// const Login = () => {
-//     const redirectUri = encodeURIComponent(`${window.location.origin}/callback`);
-//     const auth0LoginUrl = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}?????`
-// }
 
-// export default class Login extends Component {
-// render (){
-// return (
-//     <div>
-      
-      
-//       Login</div>
-//     );
-//   };
-// };
 
 
 

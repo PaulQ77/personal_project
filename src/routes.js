@@ -12,12 +12,12 @@ import Checkout from './components/Checkout';
 
 export default (
     <div>
-        <Route component={Home} exact path='/'/>
-        <Route component={Login} path='/Login' />
-        <Route component={Products} path='/Products' />
-        <Route component={Shopping_Cart} path='/Shopping_Cart' />
-        <Route component={Profile} path='/Profile' />
-        <Route component={Admin} path='/Admin' />
-        <Route component={Checkout} path='/Checkout'/>
+        <Route exact path='/' component={Home} />
+        <Route path='/Login' component={Login}  />
+        <Route path='/Products' component={Products}  />
+        <Route path='/Shopping_Cart' component={Shopping_Cart} />
+        <Route path='/Profile' component={Profile}  />
+        <Route path='/Admin' component={Admin}  />
+        <Route path='/Checkout' component={Checkout} />
     </div>
 )

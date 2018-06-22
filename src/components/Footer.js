@@ -20,6 +20,7 @@ class Footer extends Component{
 
     logInUser(){
         axios.get('/api/user-data').then(res => {
+        
             if(res.data.user){
                 this.props.login(res.data.user);
                 this.setState({

@@ -60,14 +60,20 @@ module.exports = {
               .then(users => {
                 if (users.length) {
                   const user = users[0];
+                  console.log('user', user)
                   req.session.user = {
                     email: user.email,
                     name: user.name,
                     auth0_id: user.auth0_id,
+                    admin: user.admin,
                     cart: []
                   };
+                  if(req.session.user.admin){
+                    res.redirect('/admin')
+                  } else {
                   console.log(req.session.user)
-                  res.redirect("/");
+                  res.redirect('/');
+                  }
                 } else {
                   const createData = [
                     userData.sub,
@@ -104,7 +110,7 @@ module.exports = {
 
     cart: (req, res) => {
         const { item_name, price, photo } = req.body;
-        console.log(req.body);
+        // console.log(req.body);
         req.session.user.push([...req.session.user, { item_name, price, photo }]);
         res.json({ cart: req.session.user });
     },

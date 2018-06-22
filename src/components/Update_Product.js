@@ -17,19 +17,19 @@ export default class Update_Product extends Component{
     }
     componentDidMount() {
         console.log(this.props)
-        // const {
-        //     id,
-        //     photo,
-        //     item_name,
-        //     price
-        // } = this.props.product;
+        const {
+            id,
+            photo,
+            item_name,
+            price
+        } = this.props.product;
 
-        // this.setState({
-        //     id,
-        //     photo,
-        //     item_name,
-        //     price
-        // });
+        this.setState({
+            id,
+            photo,
+            item_name,
+            price
+        });
     }
 
     handleChange(key, val){

@@ -8,7 +8,8 @@ let initialState = {
     cart: [],
     name: '',
     email: '',
-    auth0_id: ''
+    auth0_id: '',
+    user: {}
 };
 
 export default function reducer(state = initialState, action){
@@ -38,10 +39,7 @@ export default function reducer(state = initialState, action){
         case LOGIN:
         return{
             ...state,
-            name: action.payload.name,
-            email: action.payload.email,
-            auth0_id: action.payload.auth0_id,
-            cart: action.payload.cart
+            user: action.payload.user
         };
 
         case LOGOUT:
@@ -76,6 +74,7 @@ export function removeFromCart(product_id) {
 }
 
 export function login(userData){
+    console.log('reducer user', userData)
     return {
         type: LOGIN,
         payload: userData

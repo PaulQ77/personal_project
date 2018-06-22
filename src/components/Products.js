@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { addToCart } from '../ducks/reducer';
 import { connect } from 'react-redux';
+// eslint-disable-next-line
 import { Link } from 'react-router-dom';
+// eslint-disable-next-line
 import Header from './Header';
 import axios from 'axios'
 import '../styling/Products.css'

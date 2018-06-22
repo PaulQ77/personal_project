@@ -16,7 +16,7 @@ class Shopping_Cart extends Component {
             <div className='product-container-cart' key={i}>
                 
                 <div className= 'product-cart'>
-                <img src={e.photo} alt="product-photo"/>
+                <img src={e.photo} alt="product"/>
                 </div>
                 <p className='product'>{e.name}</p>
                 <p className='price'>${e.price}</p>

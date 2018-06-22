@@ -36,7 +36,7 @@ app.use(session({
     res.json({ user: req.session.user });
   });
   app.post('/api/cart', controller.cart);
-  app.get('/api/admin', controller.admin);
+  // app.get('/api/admin', controller.admin);
 
 
 

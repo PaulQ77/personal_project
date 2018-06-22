@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import Update_Product from '../components/Update_Product';
-import Footer from '../components/Footer';
+import Footer from './Footer';
+import { login } from '../ducks/reducer';
+import { connect } from 'react-redux'
+import Update_Product from './Update_Product';
+// import New_Product from './New_Product';
 
-export default class Admin extends Component {
+class Admin extends Component {
     constructor(){
         super();
         this.state = {
@@ -30,10 +33,12 @@ export default class Admin extends Component {
     }
 
     adminCheck(){
-        axios.get('/api/admin').then(res => {
+        console.log('admin hit')
             axios.get('/api/user-data').then(res2 => {
+                console.log('Admin user', res2)
+                this.props.login(res2.data)
                 this.setState({
-                    adminId: res.data[0].auth0_id
+                    adminId: res2.data[0].auth0_id
                 });
                 if (res2.data.user){
                     if (res2.data.user.auth0_id === this.state.adminId){
@@ -43,7 +48,6 @@ export default class Admin extends Component {
                     }
                 }
             }).catch(err => console.log(err));
-        });
     }
 
     deleteProduct(id){
@@ -54,7 +58,7 @@ export default class Admin extends Component {
 
     changeProduct(id) {
         let newProducts = this.state.products.slice();
-        let index = newProducts.findIndex(e => e.id == id);
+        let index = newProducts.findIndex(e => e.id === id);
         newProducts[index].update = true;
         this.setState({
             products: newProducts
@@ -63,7 +67,7 @@ export default class Admin extends Component {
 
     updateProduct(product){
         let newProducts = this.state.products;
-        let index = newProducts.findIndex(e => e.product.id == product.product.id);
+        let index = newProducts.findIndex(e => e.product.id === product.product.id);
         newProducts[index] = product;
         newProducts[index].update = false;
         this.setState({
@@ -72,13 +76,15 @@ export default class Admin extends Component {
     }
 
     render() {
+        // eslint-disable-next-line
         let products = this.state.products.map((e, i) => (
             <div key={i}>
             {e.update ? (
+                // eslint-disable-next-line
               <Update_Product product={e} updateState={this.updateProduct} />
             ) : (
               <div key={i}>
-                <img src={e.photo} alt="photo" />
+                <img src={e.photo} alt="product" />
                 <p>{e.name}</p>
                 <p>{e.price}</p>
                 <button onClick={() => this.deleteProduct(e.id)}>
@@ -97,6 +103,7 @@ export default class Admin extends Component {
             <div>
                 {this.state.admin ? (
                     <div>
+                       
                         <Link to='/'><button>Home</button></Link>
                         <Link to='/admin/newProduct'><button>Add Product</button></Link>
                     </div>
@@ -112,3 +119,11 @@ export default class Admin extends Component {
         );
     }
 }
+
+const mapDispatchtoProps = {
+
+        login
+
+}
+
+export default connect(null, mapDispatchtoProps)(Admin)

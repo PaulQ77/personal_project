@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-// import Footer from '../components/Footer';
+import Footer from './Footer';
 import { Link } from 'react-router-dom'
 
 
@@ -83,8 +83,8 @@ export default class New_Product extends Component{
                         </div>
                     ) : (
                         <div>
-                            <h6>Not Authorized: Please Login Below</h6>
-                            {/* <Footer/> */}
+                            <h6>Please Login Below</h6>
+                            <Footer/>
                         </div>
                     )}
                 </div>

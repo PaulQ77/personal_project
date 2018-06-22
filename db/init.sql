@@ -8,13 +8,17 @@ create table if not exists users (
     admin text not null
 );
 
-insert into users (auth0_id, name, email) 
+insert into users (auth0_id, name, email, admin) 
 values
-('11', 'Paul Quiroz', 'fake@email.com', 'false'),
-('22', 'Joe Customer', 'fake2@email.com', 'false'),
-('33', 'Jenny Customer', 'fake3@email.com', 'false');
+('01', 'Paul Quiroz', 'pquiroz1977@gmail.com', true),
+('02', 'Joe Customer', 'fake2@email.com', false),
+('03', 'Jenny Customer', 'fake3@email.com', false),
+('04', 'Bill Faker', 'fake@email.com', false);
 
--- select * from users;
+select * from users;
+
+select * from users where id = 1;
+
 
 
 drop table if exists products;
