@@ -32,30 +32,23 @@ export default class Update_Product extends Component{
         });
     }
 
-    handleChange(key, val){
-        this.setState({
-            [key]: val
-        });
-    }
-    updateProduct(id){
-        const updatedProducts = {
-            photo: this.state.photo,
-            name: this.state.name,
-            price: this.state.price
-        };
-        axios.put(`/api/shop/${id}`, updatedProducts).then(r => {}).catch(error => {
-            console.log(error);
-        });
-        this.props.updateState(this.state);
+
+
+    updateProduct(){
+        this.props.updateState({id: this.props.id, price: this.props.price, item_name: this.props.item_name, photo: this.props.photo});
     }
     
     render(){
         return (
             <div>
-                <input placeholder= 'photo' onChange={e => this.handleChange('photo', e.target.value)}/>
-                <input placeholder= 'name' onChange={e => this.handleChange('name', e.target.value)}/>
-                <input placeholder= 'price' onChange={e => this.handleChange('price', e.target.value)}/>
-                <button onClick={() => this.updateProduct(this.state.id)}>Submit Changes</button>
+                <div className='photo'>
+                        <img src={this.props.photo} alt={this.props.item_name}/>
+                    </div>
+            
+                <input placeholder= 'photo' type='text' onChange={e => this.props.handlePhoto(e.target.value)}/>
+                <input placeholder= 'name' type='text' onChange={e => this.props.handleName(e.target.value)}/>
+                <input placeholder= 'price' type='number' onChange={e => this.props.handlePrice(e.target.value)}/>
+                <button onClick={() => this.updateProduct()}>Submit Changes</button>
             </div>
         );
     }

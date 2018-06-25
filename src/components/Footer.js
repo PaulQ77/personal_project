@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import Login from './Login';
 import Logout from './Logout';
+import { withRouter } from 'react-router-dom';
 import { login, logout } from "../ducks/reducer";
 
 class Footer extends Component{
@@ -42,9 +43,17 @@ class Footer extends Component{
     }
 
     rerender = () => {
-        this.setState({
-            user: ''
-        });
+        console.log('method hit')
+        axios.get('/api/user-data').then(res => {
+            console.log(res.data.user)
+            if(!res.data.user){
+                console.log('if statement hit')
+                this.props.history.push('/');
+            }
+            this.setState({
+                user: ''
+            })
+        })
     };
 
     login(){
@@ -79,4 +88,4 @@ const mapDispatchtoProps = {
     logout
 };
 
-export default connect(null, mapDispatchtoProps)(Footer)
+export default withRouter(connect(null, mapDispatchtoProps)(Footer));

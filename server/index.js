@@ -5,6 +5,8 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const authController = require('./controllers/authController');
 const controller = require('./controllers/controller');
+const cloudinaryController = require('./cloudinary_controller');
+const stripeController = require('./controllers/stripe_controller');
 
 require('dotenv').config();
 
@@ -22,6 +24,13 @@ app.use(session({
   massive(process.env.CONNECTION_STRING).then(db => {
     app.set('db', db);
   });
+
+//Cloudinary endpoint
+  app.get('/api/upload', cloudinaryController.upload);
+
+//Stripe endpoint
+  app.post('/api/payment', stripeController.paymentAPI);
+
 
 
   app.get('/api/products', controller.all_products);

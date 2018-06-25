@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Footer from './Footer';
 import { login } from '../ducks/reducer';
 import { connect } from 'react-redux'
 import Update_Product from './Update_Product';
+import New_Product from './New_Product';
+
 // import New_Product from './New_Product';
 
 class Admin extends Component {
@@ -13,66 +15,76 @@ class Admin extends Component {
         this.state = {
             products: [],
             admin: false,
-            adminId: ''
+            id: '',
+            item_name: '',
+            price: '',
+            photo: ''
         };
         this.deleteProduct = this.deleteProduct.bind(this);
         this.updateProduct = this.updateProduct.bind(this);
     }
 
     componentDidMount() {
-        this.getShop();
-        this.adminCheck();
-    }
-
-    getShop(){
-        axios.get('/api/shop').then(res => {
-            this.setState({
-                products: res.data
-            });
-        });
-    }
-
-    adminCheck(){
-        console.log('admin hit')
-            axios.get('/api/user-data').then(res2 => {
-                console.log('Admin user', res2)
-                this.props.login(res2.data)
-                this.setState({
-                    adminId: res2.data[0].auth0_id
-                });
-                if (res2.data.user){
-                    if (res2.data.user.auth0_id === this.state.adminId){
+        // this.adminCheck();
+        // this.getShop();
+        this.setState({admin: false});
+        const getProducts = axios.get('/api/products');
+        const adminCheck = axios.get('/api/user-data');
+        Promise.all([
+            adminCheck,
+            getProducts
+        ]).then(res2 => {
+            console.log('Admin user', res2[0].data.user)
+                // this.props.login(res2[0].data.user)
+                // this.setState({
+                //     adminId: res2.data.user.auth0_id
+                // });
+                if (res2[0].data.user){
+                    if (res2[0].data.user.admin){
                         this.setState({
-                            admin: true
+                            admin: true,
+                            products: res2[1].data
                         });
+                    } else {
+                         this.props.history.push('/')
                     }
                 }
-            }).catch(err => console.log(err));
+        })
+    }
+
+    handleNameChange = (val) =>  {
+        this.setState({item_name: val});
+    }
+    handlePriceChange = (val) => {
+        this.setState({price: val});
+    }
+    handlePhotoChange = (val) => {
+        this.setState({photo: val});
     }
 
     deleteProduct(id){
-        axios.delete(`/api/shop/${id}`).then(res => {
-            this.getShop();
+        axios.delete(`/api/product/${id}`).then(res => {
+         this.setState({products: res.data})   
         });
     }
 
     changeProduct(id) {
+        this.setState({id: ''});
+        console.log('method hit')
         let newProducts = this.state.products.slice();
         let index = newProducts.findIndex(e => e.id === id);
         newProducts[index].update = true;
         this.setState({
-            products: newProducts
+            products: newProducts,
+            id: index + 2
         });
     }
 
     updateProduct(product){
-        let newProducts = this.state.products;
-        let index = newProducts.findIndex(e => e.product.id === product.product.id);
-        newProducts[index] = product;
-        newProducts[index].update = false;
-        this.setState({
-            products: newProducts
-        });
+        axios.put(`/api/product/${product.id}`, product)
+        .then(r => {
+            this.setState({products: r.data});
+        }).catch(err => console.log('Update Products Error-----', err));
     }
 
     render() {
@@ -81,18 +93,21 @@ class Admin extends Component {
             <div key={i}>
             {e.update ? (
                 // eslint-disable-next-line
-              <Update_Product product={e} updateState={this.updateProduct} />
+              <Update_Product product={e} updateState={this.updateProduct} photo={this.state.photo} item_name={this.state.item_name} id={this.state.id} price={this.state.price}
+              handleName={this.handleNameChange} handlePrice={this.handlePriceChange} handlePhoto={this.handlePhotoChange}/>
             ) : (
               <div key={i}>
                 <img src={e.photo} alt="product" />
-                <p>{e.name}</p>
+                <p>{e.item_name}</p>
                 <p>{e.price}</p>
                 <button onClick={() => this.deleteProduct(e.id)}>
                   Delete
                 </button>{" "}
                 <button onClick={() => this.changeProduct(e.id)}>
-                  Change
+                  Update
                 </button>
+
+                {/* <New_Product/> */}
               </div>
             )}
           </div>
@@ -101,11 +116,13 @@ class Admin extends Component {
         return (
         <div>
             <div>
+                { products }
+                {/* <New_Product/> */}
                 {this.state.admin ? (
                     <div>
                        
                         <Link to='/'><button>Home</button></Link>
-                        <Link to='/admin/newProduct'><button>Add Product</button></Link>
+                        <Link to='/Admin/New_Product'><button>Add Product</button></Link>
                     </div>
                 ) : (
                     <div className = 'not-admin'>
@@ -126,4 +143,4 @@ const mapDispatchtoProps = {
 
 }
 
-export default connect(null, mapDispatchtoProps)(Admin)
+export default withRouter(connect(null, mapDispatchtoProps)(Admin))

@@ -2,37 +2,51 @@
 const axios = require('axios');
 
 module.exports = {
-    create: (req, res, next) => {
+    create: (req, res) => {
         const db = req.app.get('db');
-        const {name, price, photo} = req.body;
+        const {item_name, price, photo} = req.body;
 
-        db.create_product([name, price, photo]).then(() => res.status(200).send()).catch(() => res.status(500).send());
+        db.create_product({item_name, price, photo}).then((products) => res.status(200).send(products)).catch((err) => console.log('Create Product Error', err));
     },
 
-    one_product: (req, res, next) => {
+    one_product: (req, res) => {
         const db = req.app.get('db');
         const {params} = req;
         // console.log('hit', params);
         db.read_product(params.id).then(product => res.status(200).send(product)).catch(() => res.status(500).send());
     },
 
-    all_products: (req, res, next) => {
+    all_products: (req, res) => {
         const db = req.app.get('db');
         
         db.read_products().then(products => res.status(200).send(products)).catch(() => res.status(500).send());
     },
 
-    update: (req, res, next) => {
+    update: (req, res) => {
         const db = req.app.get('db');
-
-        db.update_product([params.id]).then(() => res.status(200).send()).catch(() => res.status(500).send());
+        const { item_name, price, photo } = req.body;
+        console.log('item_Name--------', item_name)
+        const { params } = req;
+        console.log(+params.id);
+        console.log(req.body);
+        const obj = {
+          id: params.id,
+          item_name, 
+          price,
+          photo
+        }
+        console.log('Updated Product Hit-------');
+        db.update_product(obj).then((products) => {
+          console.log('products-------', products);
+          res.status(200).send(products)
+        }).catch((err) => console.log('Error-----------', err));
     },
 
-    delete: (req, res, next) => {
+    delete: (req, res) => {
         const db = req.app.get('db');
-        const {params} = req;
+        const { params } = req;
 
-        db.delete.product([params.id]).then(() => res.status(200).send()).catch(() => res.status(500).send());
+        db.delete_product(params.id).then((products) => res.status(200).send(products)).catch((err) => console.log('Delete Product Database Error', err));
     }, 
 
     auth: (req, res) => {
@@ -42,7 +56,7 @@ module.exports = {
         client_secret: process.env.REACT_APP_AUTH0_CLIENT_SECRET,
         code: req.query.code,
         grant_type: "authorization_code",
-        redirect_uri: `http://${req.headers.host}/auth/callback`
+        redirect_uri: `http://${req.headers.host}/callback`
       })
       .then(accessTokenResponse => {
         const accessToken = accessTokenResponse.data.access_token;
@@ -69,7 +83,7 @@ module.exports = {
                     cart: []
                   };
                   if(req.session.user.admin){
-                    res.redirect('/admin')
+                    res.redirect('/Admin')
                   } else {
                   console.log(req.session.user)
                   res.redirect('/');
@@ -115,9 +129,9 @@ module.exports = {
         res.json({ cart: req.session.user });
     },
 
-    admin: (req, res) => {
-        const db = req.app.get('db');
+    // admin: (req, res) => {
+    //     const db = req.app.get('db');
 
-        db.join().then(admin => res.status(200).json(admin));
-    }
+    //     db.join().then(admin => res.status(200).json(admin));
+    // }
 };

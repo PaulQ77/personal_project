@@ -24,7 +24,7 @@ class Header extends Component {
                     <Link to='/Shopping_Cart' className='link'> Shopping Cart</Link>
                     <Link to='/' className= 'link'> Home</Link>
                     <Link to='/Admin' className='admin'>Login</Link>
-                    {this.props.user && this.props.user.admin === 'true' ? <Link to='/adminpage' className='admin'>Admin</Link> : null}
+                    {this.props.user && this.props.user.admin === 'true' ? <Link to='/Admin' className='admin'>Admin</Link> : null}
                 
                 </div>
             
