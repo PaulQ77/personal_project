@@ -35,7 +35,8 @@ class Admin extends Component {
             getProducts
         ]).then(res2 => {
             console.log('Admin user', res2[0].data.user)
-                // this.props.login(res2[0].data.user)
+            if(res2[0].data.user){
+                this.props.login(res2[0].data.user)
                 // this.setState({
                 //     adminId: res2.data.user.auth0_id
                 // });
@@ -49,6 +50,7 @@ class Admin extends Component {
                          this.props.history.push('/')
                     }
                 }
+            }
         })
     }
 
@@ -106,6 +108,7 @@ class Admin extends Component {
                 <button onClick={() => this.changeProduct(e.id)}>
                   Update
                 </button>
+                <br/><br/>
 
                 {/* <New_Product/> */}
               </div>
@@ -123,6 +126,7 @@ class Admin extends Component {
                        
                         <Link to='/'><button>Home</button></Link>
                         <Link to='/Admin/New_Product'><button>Add Product</button></Link>
+                        <Footer/>
                     </div>
                 ) : (
                     <div className = 'not-admin'>

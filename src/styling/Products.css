@@ -1,5 +1,9 @@
+div {
+    text-align: center
+}
+
 .photo {
-    background-color: aqua;
+    /* background-color: aqua; */
     height: 250px
 }
 

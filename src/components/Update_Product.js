@@ -44,11 +44,12 @@ export default class Update_Product extends Component{
                 <div className='photo'>
                         <img src={this.props.photo} alt={this.props.item_name}/>
                     </div>
-            
+                <br/><br/>
                 <input placeholder= 'photo' type='text' onChange={e => this.props.handlePhoto(e.target.value)}/>
                 <input placeholder= 'name' type='text' onChange={e => this.props.handleName(e.target.value)}/>
                 <input placeholder= 'price' type='number' onChange={e => this.props.handlePrice(e.target.value)}/>
                 <button onClick={() => this.updateProduct()}>Submit Changes</button>
+                <br/><br/>
             </div>
         );
     }

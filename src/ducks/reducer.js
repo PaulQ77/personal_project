@@ -39,7 +39,7 @@ export default function reducer(state = initialState, action){
         case LOGIN:
         return{
             ...state,
-            user: action.payload.user
+            user: action.payload
         };
 
         case LOGOUT:

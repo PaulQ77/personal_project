@@ -46,6 +46,7 @@ class Products extends Component {
                     <p>{item.price}</p>
                     <div className='button-holder'>
                         <button className='add-to-cart' onClick= {e => this.props.addToCart(e, item)}>Add to Cart</button>
+                        <br/><br/>
                     </div>
                     
 

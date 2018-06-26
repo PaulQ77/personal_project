@@ -23,6 +23,7 @@ class Shopping_Cart extends Component {
                 <div className='button-holder'>
                 <button className='remove-from-cart' onClick={() => {
                     this.props.removeFromCart(e.id)}}>Remove from Cart</button>
+                    <br/><br/>
                 </div>
             </div>
             )
@@ -34,6 +35,7 @@ class Shopping_Cart extends Component {
                 {cart}
 
                 <Link to= './Checkout' className='link'><button>Checkout</button></Link>
+                <br/><br/>
 
 
             </div>

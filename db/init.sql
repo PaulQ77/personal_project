@@ -29,12 +29,15 @@
 --     photo text
 -- );
 
--- insert into products(item_name, price, photo)
--- VALUES
--- ('DM Waterbottle', 10.99, 'https://assets.bigcartel.com/product_images/192866332/devmtnshop_%2813_of_25%29.jpg?auto=format&fit=max&h=1000&w=1000'),
--- ('DM Hat', 14.99, 'https://assets.bigcartel.com/product_images/215232499/IMG_1964.JPG?auto=format&fit=max&h=1000&w=1000'),
--- ('DM Shirt', 19.99, 'https://assets.bigcartel.com/product_images/154156375/2015-03-10_13.57.18.jpg?auto=format&fit=max&h=1000&w=1000'),
--- ('DM Hoodie', 39.99, 'https://assets.bigcartel.com/product_images/192865687/devmtnshop_%2811_of_25%29.jpg?auto=format&fit=max&h=1000&w=1000')
+insert into products(item_name, price, photo)
+VALUES
+('DM Waterbottle', 10.00, 'http://res.cloudinary.com/paulq/image/upload/c_thumb,g_face,w_200/v1529948938/personal%20project/dm_waterbottle.jpg'),
+('DM Lanyard', 2.00, 'https://res.cloudinary.com/paulq/image/upload/c_thumb,w_200,g_face/v1529948937/personal%20project/dm_lanyard.jpg'),
+('DM Hat', 14.00, 'https://res.cloudinary.com/paulq/image/upload/c_thumb,w_200,g_face/v1529948937/personal%20project/dm_hat.jpg'),
+('DM Shirt', 20.00, 'https://res.cloudinary.com/paulq/image/upload/c_thumb,w_200,g_face/v1529948937/personal%20project/dm_tshirt.jpg'),
+('DM Hoodie', 40.00, 'https://res.cloudinary.com/paulq/image/upload/c_thumb,w_200,g_face/v1529948937/personal%20project/dm_hoodie.jpg'),
+('DM Socks', 5.00, 'https://res.cloudinary.com/paulq/image/upload/c_thumb,w_200,g_face/v1529948937/personal%20project/dm_socks.jpg')
+-- ('DM Beanie', 10.00, 'https://res.cloudinary.com/paulq/image/upload/c_thumb,w_200,g_face/v1529948937/personal%20project/dm_beanie.jpg')
 
 -- select * from products;
 
