@@ -8,3 +8,6 @@ create table if not exists admin (
     user_id serial,
     foreign key (user_id) references users(id)
 );
+
+insert into admin(auth0_id, name)
+VALUES('github|25933912', 'pquiroz1977@gmail.com')
