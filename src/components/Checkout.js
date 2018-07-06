@@ -33,12 +33,12 @@ const onToken = (amount, description) => token => {
 //The register method is a prop. 
 //It is destructured in the component..
 const Checkout = ({name, description, amount, username, address}) => {
-    //token is a required, becuase it is used to checkout or authorize the checkout on stripe's end.
+    //token is a required, because it is used to checkout or authorize the checkout on stripe's end.
     return  (
         <StripeCheckout
             name={name}
             email='pquiroz1977@gmail.com'
-            description={'You Shopping Cart'}
+            description={'Your Shopping Cart'}
             amount={usdToCent(10)}
             token={onToken(10, 'Nice Coffee Mug')}
             currency='USD'
@@ -49,3 +49,4 @@ const Checkout = ({name, description, amount, username, address}) => {
 }
 
 export default Checkout;
+

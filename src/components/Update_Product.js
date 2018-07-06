@@ -35,10 +35,12 @@ export default class Update_Product extends Component{
 
 
     updateProduct(){
-        this.props.updateState({id: this.props.id, price: this.props.price, item_name: this.props.item_name, photo: this.props.photo});
+        console.log('props id', this.props.id)
+        this.props.updateState({id: this.props.product.id, price: this.props.productState.price, item_name: this.props.productState.item_name, photo: this.props.productState.photo});
     }
     
     render(){
+        console.log(this.props)
         return (
             <div>
                 <div className='photo'>

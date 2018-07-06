@@ -39,7 +39,7 @@ app.use(session({
 
   app.get('/api/products', controller.all_products);
   app.get('/api/product/:id', controller.one_product);
-  app.put('/api/product/:id', controller.update);
+  app.put('/api/products/:id', controller.update);
   app.post('/api/product', controller.create);
   app.delete('/api/product/:id', controller.delete);
 
@@ -49,7 +49,7 @@ app.use(session({
     res.json({ user: req.session.user });
   });
   app.post('/api/cart', controller.cart);
-  // app.get('/api/admin', controller.admin);
+  app.get('/api/join', controller.join);
 
 
 

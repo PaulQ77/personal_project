@@ -25,7 +25,7 @@ module.exports = {
     update: (req, res) => {
         const db = req.app.get('db');
         const { item_name, price, photo } = req.body;
-        console.log('item_Name--------', item_name)
+        console.log('item_Name--------', item_name, price, photo)
         const { params } = req;
         console.log(+params.id);
         console.log(req.body);
@@ -48,6 +48,13 @@ module.exports = {
 
         db.delete_product(params.id).then((products) => res.status(200).send(products)).catch((err) => console.log('Delete Product Database Error', err));
     }, 
+
+    join: (req, res) => {
+      const db = req.app.get('db');
+      db.join().then(users => {
+        res.status(200).send(users)
+      }).catch((err) => console.log('Join error', err));
+    },
 
     auth: (req, res) => {
         axios

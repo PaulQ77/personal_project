@@ -4,6 +4,7 @@ const stripe = require('stripe')(process.env.STRIPE_CLIENT_KEY);
 module.exports = {
     //This method is used the endpoint for stripe.
     paymentAPI(req, res) {
+        const dbInstance = req.app.get('db');
         //DO NOT EDIT BELOW!!!!!!!
         const { source, currency, amount, acct, email } = req.body;
         console.log(req.body)
@@ -34,10 +35,10 @@ module.exports = {
                     }
                     console.log(stripeRes);
                     console.log('Reciept------', newReciept);
-                    //Insert into database.
-                    // dbInstance.create_reciept(newReciept).then(res => {
-                    //     console.log(res);
-                    // }).catch(err => console.log('Create Recirept Error---', err));
+                    // Insert into database.
+                    dbInstance.create_receipt(newReciept).then(res => {
+                        console.log(res);
+                    }).catch(err => console.log('Create Recirept Error---', err));
                     res.status(200).send({success: stripeRes});
                 } else {
                     //Not a successful payment.

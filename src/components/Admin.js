@@ -6,6 +6,7 @@ import { login } from '../ducks/reducer';
 import { connect } from 'react-redux'
 import Update_Product from './Update_Product';
 import New_Product from './New_Product';
+import { jsonArrayParam } from '../../node_modules/cloudinary/lib/utils';
 
 // import New_Product from './New_Product';
 
@@ -13,6 +14,7 @@ class Admin extends Component {
     constructor(){
         super();
         this.state = {
+            users: [],
             products: [],
             admin: false,
             id: '',
@@ -30,9 +32,11 @@ class Admin extends Component {
         this.setState({admin: false});
         const getProducts = axios.get('/api/products');
         const adminCheck = axios.get('/api/user-data');
+        const join = axios.get('/api/join');
         Promise.all([
             adminCheck,
-            getProducts
+            getProducts,
+            join
         ]).then(res2 => {
             console.log('Admin user', res2[0].data.user)
             if(res2[0].data.user){
@@ -44,6 +48,7 @@ class Admin extends Component {
                     if (res2[0].data.user.admin){
                         this.setState({
                             admin: true,
+                            users: res2[2].data,
                             products: res2[1].data
                         });
                     } else {
@@ -78,24 +83,28 @@ class Admin extends Component {
         newProducts[index].update = true;
         this.setState({
             products: newProducts,
-            id: index + 2
+            // id: index + 1
         });
     }
 
     updateProduct(product){
-        axios.put(`/api/product/${product.id}`, product)
+        console.log('product--------', product);
+        console.log('product id ----------', product.id)
+        axios.put(`/api/products/${product.id}`, product)
         .then(r => {
+            console.log('r-data------', r.data);
             this.setState({products: r.data});
         }).catch(err => console.log('Update Products Error-----', err));
     }
 
     render() {
+        console.log('admin state', this.state)
         // eslint-disable-next-line
         let products = this.state.products.map((e, i) => (
             <div key={i}>
             {e.update ? (
                 // eslint-disable-next-line
-              <Update_Product product={e} updateState={this.updateProduct} photo={this.state.photo} item_name={this.state.item_name} id={this.state.id} price={this.state.price}
+              <Update_Product product={e} productState={this.state} updateState={this.updateProduct} photo={this.state.photo} item_name={this.state.item_name} id={this.state.id} price={this.state.price}
               handleName={this.handleNameChange} handlePrice={this.handlePriceChange} handlePhoto={this.handlePhotoChange}/>
             ) : (
               <div key={i}>
@@ -115,10 +124,16 @@ class Admin extends Component {
             )}
           </div>
         ))
-
+        let users = this.state.users.length ? this.state.users.map(user => 
+        <div>
+            <p>
+                {JSON.stringify(user)}
+            </p>
+        </div>) : null;
         return (
         <div>
             <div>
+                { users }
                 { products }
                 {/* <New_Product/> */}
                 {this.state.admin ? (

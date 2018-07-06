@@ -1,3 +1,3 @@
-select users.auth0_id, users.name
+select users.id, users.name, users.email, receipts.*
 from users
-Join admin on users.auth0_id=admin.auth0_id;
+Join receipts on users.id=receipts.user_id where users.email = 'pquiroz1977@gmail.com';
